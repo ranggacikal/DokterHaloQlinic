@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="10dp"
+    app:cardElevation="7dp"
+    app:cardCornerRadius="10dp"
+    app:cardBackgroundColor="@color/red">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/text_item_id_transaksi_pendapatan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Id Transaksi"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:fontFamily="@font/robotoreguler"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="15dp"/>
+
+        <TextView
+            android:id="@+id/text_item_harga_pendapatan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Rp.0"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:fontFamily="@font/robotobold"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="5dp"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/text_item_jadwal_pendapatan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="jadwal"
+            android:textColor="@color/white"
+            android:textSize="13sp"
+            android:fontFamily="@font/robotoreguler"
+            android:gravity="center"
+            android:layout_marginBottom="20dp"/>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

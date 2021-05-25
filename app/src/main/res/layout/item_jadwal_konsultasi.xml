@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardBackgroundColor="@color/red"
+    android:layout_below="@+id/text_jadwal_konsul"
+    android:layout_margin="20dp"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img_item_jadwal_konsultasi"
+                android:layout_marginStart="20dp"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:src="@drawable/icon_user"
+                app:civ_border_width="1dp"
+                app:civ_border_color="@color/green"/>
+
+            <LinearLayout
+                android:layout_toRightOf="@+id/img_item_jadwal_konsultasi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/text_item_nama_jadwal_konsultasi"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="Nama Pelanggan"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/robotobold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Konsultasi dengan anda"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"
+                    android:fontFamily="@font/robotoreguler"/>
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/img_item_chat_jadwal"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:src="@drawable/icon_chat_jadwal"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="15dp"
+                android:layout_centerVertical="true"/>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_marginTop="15dp">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/ic_jam"/>
+
+            <TextView
+                android:id="@+id/text_item_tanggal_jadwal_konsultasi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tanggal Dan Waktu Jadwal Konsultasi"
+                android:textColor="@color/white"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/robotoreguler"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

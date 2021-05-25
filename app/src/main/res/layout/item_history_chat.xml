@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="10dp"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="7dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/icon_user"
+            android:layout_marginStart="10dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginStart="10dp"
+            android:layout_gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/text_item_nama_history_chat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nama Pasien"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:fontFamily="@font/robotobold"/>
+
+            <TextView
+                android:id="@+id/text_item_tanggal_history_chat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="tanggal"
+                android:textColor="@color/black"
+                android:textSize="13sp"
+                android:fontFamily="@font/robotoreguler"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
