@@ -1,6 +1,7 @@
 package com.haloqlinic.dokter.api;
 
 import com.haloqlinic.dokter.model.editAkun.ResponseEditAkun;
+import com.haloqlinic.dokter.model.kategoriDokter.ResponseKategoriDokter;
 import com.haloqlinic.dokter.model.kecamatan.ResponseDataKecamatan;
 import com.haloqlinic.dokter.model.kota.ResponseDatakota;
 import com.haloqlinic.dokter.model.listKonsultasi.ResponseDataKonsultasi;
@@ -10,6 +11,7 @@ import com.haloqlinic.dokter.model.login.ResponseLogin;
 import com.haloqlinic.dokter.model.provinsi.ResponseDataProvinsi;
 import com.haloqlinic.dokter.model.resetPassword.ResponseResetPassword;
 import com.haloqlinic.dokter.model.saldo.ResponseDataSaldo;
+import com.haloqlinic.dokter.model.signUp.ResponseSignup;
 import com.haloqlinic.dokter.model.updateKonsultasi.ResponseUpdateKonsultasi;
 import com.haloqlinic.dokter.model.updatePassword.ResponseUpdatePassword;
 import com.haloqlinic.dokter.model.withdrawal.ResponseWithdrawal;
@@ -82,4 +84,23 @@ public interface ApiService {
     @POST("update_konsultasi.php")
     Call<ResponseUpdateKonsultasi> updateKonsultasu(@Field("id_transaksi") String id_transaksi,
                                                     @Field("status") String status);
+
+    @GET("kategori.php")
+    Call<ResponseKategoriDokter> kategoriDokter();
+
+    @FormUrlEncoded
+    @POST("signup.php")
+    Call<ResponseSignup> signup(@Field("id_kategori") String id_kategori,
+                                @Field("email") String email,
+                                @Field("password") String password,
+                                @Field("nama") String nama,
+                                @Field("alamat") String alamat,
+                                @Field("no_hp") String no_hp,
+                                @Field("id_kecamatan") String id_kecamatan,
+                                @Field("id_kota") String id_kota,
+                                @Field("id_provinsi") String id_provinsi,
+                                @Field("sip") String sip,
+                                @Field("spesialis") String spesialis,
+                                @Field("jk") String jk,
+                                @Field("tentang") String tentang);
 }

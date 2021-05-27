@@ -14,11 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DokterHaloQlinic"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ChatActivity">
-
-
-
-        </activity>
+        <activity android:name=".SignupActivity"></activity>
+        <activity android:name=".ChatActivity"></activity>
         <activity android:name=".DetailKonsultasiActivity" />
         <activity android:name=".TarikDanaActivity" />
         <activity android:name=".UpdatePasswordActivity" />

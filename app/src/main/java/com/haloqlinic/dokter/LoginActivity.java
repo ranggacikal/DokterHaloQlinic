@@ -23,8 +23,6 @@ import com.haloqlinic.dokter.api.ConfigRetrofit;
 import com.haloqlinic.dokter.model.login.ResponseItem;
 import com.haloqlinic.dokter.model.login.ResponseLogin;
 import com.haloqlinic.dokter.model.resetPassword.ResponseResetPassword;
-import com.onesignal.OSDeviceState;
-import com.onesignal.OneSignal;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import java.util.List;
@@ -39,13 +37,13 @@ public class LoginActivity extends AppCompatActivity {
 
     EditText edtEmail, edtPassword;
     TextView txtLupaPassword;
-    Button btnSignIn;
+    Button btnSignIn, btnSignup;
     ImageView showPassBtn;
     View dialogLupaPassword;
     String token, token_from, user_id, user_id_from;
 
     private SharedPreferencedConfig preferencedConfig;
-    private static final String ONESIGNAL_APP_ID = "67314311-5f01-4b4e-b20c-1e0f6fb9958c";
+//    private static final String ONESIGNAL_APP_ID = "67314311-5f01-4b4e-b20c-1e0f6fb9958c";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,15 +56,16 @@ public class LoginActivity extends AppCompatActivity {
         edtPassword = findViewById(R.id.edt_login_password);
         txtLupaPassword = findViewById(R.id.text_lupa_password);
         btnSignIn = findViewById(R.id.btn_signin);
+        btnSignup = findViewById(R.id.btn_signup_login);
         showPassBtn = findViewById(R.id.img_hide_password_login);
 
-        OneSignal.initWithContext(this);
-        OneSignal.setAppId(ONESIGNAL_APP_ID);
-
-        OSDeviceState device = OneSignal.getDeviceState();
-
-        token = device.getPushToken();
-        user_id = device.getUserId();
+//        OneSignal.initWithContext(this);
+//        OneSignal.setAppId(ONESIGNAL_APP_ID);
+//
+//        OSDeviceState device = OneSignal.getDeviceState();
+//
+//        token = device.getPushToken();
+//        user_id = device.getUserId();
 
         PushDownAnim.setPushDownAnimTo(txtLupaPassword)
                 .setScale( MODE_SCALE, 0.89f  )
@@ -74,6 +73,15 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         tampilDialog();
+                    }
+                });
+
+        PushDownAnim.setPushDownAnimTo(btnSignup)
+                .setScale( MODE_SCALE, 0.89f  )
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(new Intent(LoginActivity.this, SignupActivity.class));
                     }
                 });
 
