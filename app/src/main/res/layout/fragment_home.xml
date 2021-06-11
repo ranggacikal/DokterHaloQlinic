@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -25,19 +26,33 @@
                 android:id="@+id/txt_nama_dokter_home"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:fontFamily="@font/robotoblack"
                 android:text="Nama Dokter"
-                android:layout_centerVertical="true"
                 android:textColor="@color/red"
                 android:textSize="17sp" />
 
-            <ImageView
-                android:id="@+id/img_pesan_home"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/ic_pesan"
+            <!--            <ImageView-->
+            <!--                android:id="@+id/img_pesan_home"-->
+            <!--                android:layout_width="20dp"-->
+            <!--                android:layout_height="20dp"-->
+            <!--                android:layout_alignParentEnd="true"-->
+            <!--                android:layout_centerVertical="true"-->
+            <!--                android:src="@drawable/ic_pesan" />-->
+
+
+            <Switch
+                android:id="@+id/simpleSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:layout_alignParentEnd="true"/>
+                android:fontFamily="@font/robotobold"
+                android:text="OFFLINE"
+                android:textColor="@color/white"
+                android:textOff="Offline"
+                android:textOn="Online"
+                tools:ignore="UseSwitchCompatOrMaterialXml" />
 
         </RelativeLayout>
 
@@ -54,23 +69,86 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Jadwal konsultasi anda"
-                android:textColor="@color/black"
-                android:layout_marginTop="16dp"
-                android:fontFamily="@font/robotobold"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="15dp"/>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_jadwal_konsultasi"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="35dp"
-                android:layout_marginBottom="15dp"
-                android:layout_marginEnd="35dp"/>
+                android:layout_marginTop="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="15dp"
+                    android:fontFamily="@font/robotobold"
+                    android:text="Jadwal konsultasi anda"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+            </RelativeLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/linear_konsultasi_home"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/icon_konsultasi"
+                        app:civ_border_color="@color/black"
+                        app:civ_border_width="1dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Konsultasi"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/robotobold"
+                        android:textSize="17sp"
+                        android:layout_marginTop="5dp"
+                        android:textAlignment="center"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linear_jadwal_konsultasi_home"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:orientation="vertical">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/icon_jadwal_konsultasi"
+                        app:civ_border_color="@color/black"
+                        app:civ_border_width="1dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Jadwal\nKonsultasi"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/robotobold"
+                        android:textSize="17sp"
+                        android:layout_marginTop="5dp"
+                        android:textAlignment="center"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
 
 
         </LinearLayout>

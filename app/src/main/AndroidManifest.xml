@@ -14,8 +14,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DokterHaloQlinic"
         android:usesCleartextTraffic="true">
-        <activity android:name=".SignupActivity"></activity>
-        <activity android:name=".ChatActivity"></activity>
+        <activity android:name=".JadwalKonsultasiActivity"></activity>
+        <activity android:name=".KonsultasiActivity" />
+        <activity
+            android:name=".ListResepActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+        <activity android:name=".DetailProdukActivity" />
+        <activity
+            android:name=".TambahResepObatActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+        <activity android:name=".SignupActivity" />
+        <activity android:name=".ChatActivity" />
         <activity android:name=".DetailKonsultasiActivity" />
         <activity android:name=".TarikDanaActivity" />
         <activity android:name=".UpdatePasswordActivity" />
@@ -28,6 +37,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
+
+        <meta-data
+            android:name="com.onesignal.NotificationServiceExtension"
+            android:value="com.company.NotificationServiceExtension" />
     </application>
 
 </manifest>

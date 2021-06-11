@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +24,8 @@ import com.haloqlinic.dokter.api.ConfigRetrofit;
 import com.haloqlinic.dokter.model.login.ResponseItem;
 import com.haloqlinic.dokter.model.login.ResponseLogin;
 import com.haloqlinic.dokter.model.resetPassword.ResponseResetPassword;
+import com.onesignal.OSDeviceState;
+import com.onesignal.OneSignal;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import java.util.List;
@@ -43,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
     String token, token_from, user_id, user_id_from;
 
     private SharedPreferencedConfig preferencedConfig;
-//    private static final String ONESIGNAL_APP_ID = "67314311-5f01-4b4e-b20c-1e0f6fb9958c";
+    private static final String ONESIGNAL_APP_ID = "e0a7b99b-6b25-4557-8e4a-b276c9ab8d3e";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,13 +62,15 @@ public class LoginActivity extends AppCompatActivity {
         btnSignup = findViewById(R.id.btn_signup_login);
         showPassBtn = findViewById(R.id.img_hide_password_login);
 
-//        OneSignal.initWithContext(this);
-//        OneSignal.setAppId(ONESIGNAL_APP_ID);
-//
-//        OSDeviceState device = OneSignal.getDeviceState();
-//
-//        token = device.getPushToken();
-//        user_id = device.getUserId();
+        OneSignal.initWithContext(this);
+        OneSignal.setAppId(ONESIGNAL_APP_ID);
+
+        OSDeviceState device = OneSignal.getDeviceState();
+
+        token = device.getPushToken();
+        user_id = device.getUserId();
+
+        Log.d("user_id_dokter", "onCreate: "+user_id);
 
         PushDownAnim.setPushDownAnimTo(txtLupaPassword)
                 .setScale( MODE_SCALE, 0.89f  )
@@ -227,7 +232,7 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setMessage("Login");
         progressDialog.show();
 
-        ConfigRetrofit.service.login(email, password).enqueue(new Callback<ResponseLogin>() {
+        ConfigRetrofit.service.login(email, password, user_id).enqueue(new Callback<ResponseLogin>() {
             @Override
             public void onResponse(Call<ResponseLogin> call, Response<ResponseLogin> response) {
                 if (response.isSuccessful()){
@@ -308,6 +313,9 @@ public class LoginActivity extends AppCompatActivity {
                     preferencedConfig.savePrefString(SharedPreferencedConfig.PREFERENCE_PROVINSI, nama_provinsi);
                     preferencedConfig.savePrefString(SharedPreferencedConfig.PREFERENCE_KOTA, nama_kota);
                     preferencedConfig.savePrefString(SharedPreferencedConfig.PREFERENCE_KECAMATAN, nama_kecamatan);
+
+                    Log.d("checkToken", "user_id: "+user_id);
+                    Log.d("checkToken", "player_id: "+player_id);
 
                     preferencedConfig.savePrefBoolean(SharedPreferencedConfig.PREFERENCE_IS_LOGIN, true);
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));

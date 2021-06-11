@@ -1,6 +1,8 @@
 package com.haloqlinic.dokter.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,12 +11,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.haloqlinic.dokter.ChatActivity;
 import com.haloqlinic.dokter.R;
 import com.haloqlinic.dokter.model.listKonsultasi.DataItem;
+import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+
+import static com.thekhaeng.pushdownanim.PushDownAnim.MODE_SCALE;
 
 public class JadwalKonsultasiAdapter extends RecyclerView.Adapter<JadwalKonsultasiAdapter.JadwalKonsultasiViewHolder> {
 
@@ -40,6 +46,21 @@ public class JadwalKonsultasiAdapter extends RecyclerView.Adapter<JadwalKonsulta
         holder.txtNamaDokter.setText(dataKonsultasi.get(position).getNamaPasien());
         holder.txtWaktu.setText(dataKonsultasi.get(position).getJadwal());
 
+        PushDownAnim.setPushDownAnimTo(holder.itemView)
+                .setScale( MODE_SCALE, 0.89f  )
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intentChat = new Intent(context, ChatActivity.class);
+                        intentChat.putExtra("token", dataKonsultasi.get(position).getToken());
+                        intentChat.putExtra("nama", dataKonsultasi.get(position).getNamaPasien());
+                        intentChat.putExtra("player_id", dataKonsultasi.get(position).getPlayerId());
+                        intentChat.putExtra("id_transaksi", dataKonsultasi.get(position).getIdTransaksi());
+                        intentChat.putExtra("id_customer", dataKonsultasi.get(position).getIdCustomer());
+                        Log.d("id_transaksi", "onClick: "+dataKonsultasi.get(position).getIdTransaksi());
+                        context.startActivity(intentChat);
+                    }
+                });
     }
 
     @Override

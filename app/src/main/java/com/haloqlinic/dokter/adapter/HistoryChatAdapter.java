@@ -76,6 +76,11 @@ public class HistoryChatAdapter extends RecyclerView.Adapter<HistoryChatAdapter.
                                 Intent intentChat = new Intent(context, ChatActivity.class);
                                 intentChat.putExtra("token", dataKonsultasi.get(position).getToken());
                                 intentChat.putExtra("nama", dataKonsultasi.get(position).getNamaPasien());
+                                intentChat.putExtra("player_id", dataKonsultasi.get(position).getPlayerId());
+                                intentChat.putExtra("id_transaksi", dataKonsultasi.get(position).getIdTransaksi());
+                                intentChat.putExtra("id_customer", dataKonsultasi.get(position).getIdCustomer());
+                                Log.d("id_transaksi", "onClick: "+dataKonsultasi.get(position).getIdTransaksi());
+                                Log.d("playerId", "check: "+dataKonsultasi.get(position).getPlayerId());
                                 context.startActivity(intentChat);
 
                             }

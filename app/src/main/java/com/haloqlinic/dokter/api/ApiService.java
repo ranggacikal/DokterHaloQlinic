@@ -1,20 +1,29 @@
 package com.haloqlinic.dokter.api;
 
+import com.haloqlinic.dokter.model.addRecipe.ResponseTambahResep;
+import com.haloqlinic.dokter.model.cariProduk.ResponseCariProduk;
 import com.haloqlinic.dokter.model.editAkun.ResponseEditAkun;
 import com.haloqlinic.dokter.model.kategoriDokter.ResponseKategoriDokter;
 import com.haloqlinic.dokter.model.kecamatan.ResponseDataKecamatan;
 import com.haloqlinic.dokter.model.kota.ResponseDatakota;
 import com.haloqlinic.dokter.model.listKonsultasi.ResponseDataKonsultasi;
+import com.haloqlinic.dokter.model.listRecipe.ResponseDataRecipe;
 import com.haloqlinic.dokter.model.listWithDrawal.ResponseListWithDrawal;
 import com.haloqlinic.dokter.model.login.ResponseItem;
 import com.haloqlinic.dokter.model.login.ResponseLogin;
+import com.haloqlinic.dokter.model.notifChat.ResponseNotif;
 import com.haloqlinic.dokter.model.provinsi.ResponseDataProvinsi;
 import com.haloqlinic.dokter.model.resetPassword.ResponseResetPassword;
 import com.haloqlinic.dokter.model.saldo.ResponseDataSaldo;
 import com.haloqlinic.dokter.model.signUp.ResponseSignup;
+import com.haloqlinic.dokter.model.statusDokter.ResponseStatusDokter;
 import com.haloqlinic.dokter.model.updateKonsultasi.ResponseUpdateKonsultasi;
 import com.haloqlinic.dokter.model.updatePassword.ResponseUpdatePassword;
+import com.haloqlinic.dokter.model.updateRecipe.ResponseUpdateResep;
+import com.haloqlinic.dokter.model.updateStatus.ResponseUpdateStatus;
 import com.haloqlinic.dokter.model.withdrawal.ResponseWithdrawal;
+
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -27,7 +36,8 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("signin.php")
     Call<ResponseLogin> login(@Field("email") String email,
-                              @Field("password") String password);
+                              @Field("password") String password,
+                              @Field("player_id") String player_id);
 
     @FormUrlEncoded
     @POST("forgot_password.php")
@@ -103,4 +113,49 @@ public interface ApiService {
                                 @Field("spesialis") String spesialis,
                                 @Field("jk") String jk,
                                 @Field("tentang") String tentang);
+
+    @FormUrlEncoded
+    @POST("update_account.php")
+    Call<ResponseStatusDokter> statusDokter(@Field("id_dokter") String id_dokter,
+                                            @Field("status") String status);
+
+    @FormUrlEncoded
+    @POST("notif.php")
+    Call<ResponseNotif> notifChat(@Field("player_id") String player_id);
+
+    @FormUrlEncoded
+    @POST("cari_produk.php")
+    Call<ResponseCariProduk> cariProduk(@Field("nama_produk") String nama_produk);
+
+    @FormUrlEncoded
+    @POST("update_status.php")
+    Call<ResponseUpdateStatus> updateStatus(@Field("id_transaksi") String id_transaksi);
+
+    @FormUrlEncoded
+    @POST("add_recipe.php")
+    Call<ResponseTambahResep> tambahResep(@Field("id_transaksi") String id_transaksi,
+                                          @Field("id_customer") String id_customer,
+                                          @Field("id_dokter") String id_dokter,
+                                          @Field("id_produk") String id_produk,
+                                          @Field("id_member") String id_member,
+                                          @Field("berat") String berat,
+                                          @Field("jumlah") String jumlah,
+                                          @Field("id") String id,
+                                          @Field("variasi") String variasi,
+                                          @Field("aturan") String aturan,
+                                          @Field("keterangan") String keterangan,
+                                          @Field("harga") String harga);
+
+    @FormUrlEncoded
+    @POST("recipe.php")
+    Call<ResponseDataRecipe> dataResep(@Field("id_transaksi") String id_transaksi);
+
+    @FormUrlEncoded
+    @POST("update_recipe.php")
+    Call<ResponseUpdateResep> updateResep(@Field("id_transaksi") String id_transaksi,
+                                          @Field("id_pesan[]") ArrayList<String> id_pesan,
+                                          @Field("jumlah[]") ArrayList<String> jumlah,
+                                          @Field("harga[]") ArrayList<String> harga,
+                                          @Field("berat_item[]") ArrayList<String> berat_item);
+
 }

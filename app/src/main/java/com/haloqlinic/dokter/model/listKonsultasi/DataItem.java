@@ -10,6 +10,9 @@ public class DataItem{
 	@SerializedName("jadwal")
 	private String jadwal;
 
+	@SerializedName("player_id")
+	private String playerId;
+
 	@SerializedName("id_customer")
 	private String idCustomer;
 
@@ -18,6 +21,9 @@ public class DataItem{
 
 	@SerializedName("id_transaksi")
 	private String idTransaksi;
+
+	@SerializedName("batas_konsultasi")
+	private String batasKonsultasi;
 
 	@SerializedName("status_transaksi")
 	private String statusTransaksi;
@@ -39,6 +45,14 @@ public class DataItem{
 
 	public String getJadwal(){
 		return jadwal;
+	}
+
+	public void setPlayerId(String playerId){
+		this.playerId = playerId;
+	}
+
+	public String getPlayerId(){
+		return playerId;
 	}
 
 	public void setIdCustomer(String idCustomer){
@@ -65,6 +79,14 @@ public class DataItem{
 		return idTransaksi;
 	}
 
+	public void setBatasKonsultasi(String batasKonsultasi){
+		this.batasKonsultasi = batasKonsultasi;
+	}
+
+	public String getBatasKonsultasi(){
+		return batasKonsultasi;
+	}
+
 	public void setStatusTransaksi(String statusTransaksi){
 		this.statusTransaksi = statusTransaksi;
 	}
@@ -87,9 +109,11 @@ public class DataItem{
 			"DataItem{" + 
 			"nama_pasien = '" + namaPasien + '\'' + 
 			",jadwal = '" + jadwal + '\'' + 
+			",player_id = '" + playerId + '\'' + 
 			",id_customer = '" + idCustomer + '\'' + 
 			",id_konsultasi = '" + idKonsultasi + '\'' + 
 			",id_transaksi = '" + idTransaksi + '\'' + 
+			",batas_konsultasi = '" + batasKonsultasi + '\'' + 
 			",status_transaksi = '" + statusTransaksi + '\'' + 
 			",token = '" + token + '\'' + 
 			"}";

@@ -1,5 +1,7 @@
 package com.haloqlinic.dokter.fragmentMain;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,15 +11,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.haloqlinic.dokter.JadwalKonsultasiActivity;
+import com.haloqlinic.dokter.KonsultasiActivity;
 import com.haloqlinic.dokter.R;
 import com.haloqlinic.dokter.SharedPreference.SharedPreferencedConfig;
 import com.haloqlinic.dokter.adapter.JadwalKonsultasiAdapter;
 import com.haloqlinic.dokter.api.ConfigRetrofit;
 import com.haloqlinic.dokter.model.listKonsultasi.DataItem;
 import com.haloqlinic.dokter.model.listKonsultasi.ResponseDataKonsultasi;
+import com.haloqlinic.dokter.model.statusDokter.ResponseStatusDokter;
+import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import java.util.List;
 
@@ -25,11 +34,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.thekhaeng.pushdownanim.PushDownAnim.MODE_SCALE;
+
 
 public class HomeFragment extends Fragment {
 
     private SharedPreferencedConfig preferencedConfig;
-    RecyclerView rvJadwalKonsultasi;
+    LinearLayout linearKonsultasi, linearJadwalKonsultasi;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -49,40 +60,91 @@ public class HomeFragment extends Fragment {
 
         preferencedConfig = new SharedPreferencedConfig(getActivity());
         TextView txtNamaDokter = rootView.findViewById(R.id.txt_nama_dokter_home);
-        rvJadwalKonsultasi = rootView.findViewById(R.id.recycler_jadwal_konsultasi);
+        linearKonsultasi = rootView.findViewById(R.id.linear_konsultasi_home);
+        linearJadwalKonsultasi = rootView.findViewById(R.id.linear_jadwal_konsultasi_home);
+        @SuppressLint("UseSwitchCompatOrMaterialCode") Switch switchButton = rootView.findViewById(R.id.simpleSwitch);
+
+        switchButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    switchButton.setText("ONLINE");
+                    online();
+
+
+                }else{
+                    switchButton.setText("OFFLINE");
+                    offline();
+                }
+            }
+        });
 
         txtNamaDokter.setText("Dr. "+preferencedConfig.getPreferenceNama());
-        rvJadwalKonsultasi.setHasFixedSize(true);
-        rvJadwalKonsultasi.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        loadJadwalKonsultasi();
+        PushDownAnim.setPushDownAnimTo(linearKonsultasi)
+                .setScale( MODE_SCALE, 0.89f  )
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(new Intent(getActivity(), KonsultasiActivity.class));
+                    }
+                });
 
+        PushDownAnim.setPushDownAnimTo(linearJadwalKonsultasi)
+                .setScale( MODE_SCALE, 0.89f  )
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(new Intent(getActivity(), JadwalKonsultasiActivity.class));
+                    }
+                });
 
         return rootView;
     }
 
-    private void loadJadwalKonsultasi() {
+    private void offline() {
 
         String id_dokter = preferencedConfig.getPreferenceIdDokter();
-        String status = "1";
 
-        ConfigRetrofit.service.dataKonsultasi(id_dokter, status).enqueue(new Callback<ResponseDataKonsultasi>() {
+        ConfigRetrofit.service.statusDokter(id_dokter, "2").enqueue(new Callback<ResponseStatusDokter>() {
             @Override
-            public void onResponse(Call<ResponseDataKonsultasi> call, Response<ResponseDataKonsultasi> response) {
+            public void onResponse(Call<ResponseStatusDokter> call, Response<ResponseStatusDokter> response) {
                 if (response.isSuccessful()){
 
-                    List<DataItem> dataKonsultasi = response.body().getData();
-                    JadwalKonsultasiAdapter adapter = new JadwalKonsultasiAdapter(getActivity(), dataKonsultasi);
-                    rvJadwalKonsultasi.setAdapter(adapter);
+                    Toast.makeText(getActivity(), "Anda Saat ini OFFLINE", Toast.LENGTH_SHORT).show();
 
                 }else{
-                    Toast.makeText(getActivity(), "Data Kosong", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Status Offline GAGAL", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<ResponseDataKonsultasi> call, Throwable t) {
-                Toast.makeText(getActivity(), "Error: "+t.getMessage(), Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<ResponseStatusDokter> call, Throwable t) {
+                Toast.makeText(getActivity(), "Error"+t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    private void online() {
+
+        String id_dokter = preferencedConfig.getPreferenceIdDokter();
+
+        ConfigRetrofit.service.statusDokter(id_dokter, "1").enqueue(new Callback<ResponseStatusDokter>() {
+            @Override
+            public void onResponse(Call<ResponseStatusDokter> call, Response<ResponseStatusDokter> response) {
+                if (response.isSuccessful()){
+
+                    Toast.makeText(getActivity(), "Anda Saat ini ONLINE", Toast.LENGTH_SHORT).show();
+
+                }else{
+                    Toast.makeText(getActivity(), "Status Online GAGAL", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseStatusDokter> call, Throwable t) {
+                Toast.makeText(getActivity(), "Error"+t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
