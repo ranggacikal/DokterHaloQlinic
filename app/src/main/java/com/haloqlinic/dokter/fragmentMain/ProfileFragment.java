@@ -60,13 +60,7 @@ public class ProfileFragment extends Fragment {
         cardNilaiKami = rootView.findViewById(R.id.card_nilai_kami_profile);
         cardKeluar = rootView.findViewById(R.id.card_keluar_profile);
 
-        final String url_image = "https://aplikasicerdas.net/haloqlinic/file/dokter/profile/";
-        String image_dokter = preferencedConfig.getPreferenceImg();
-
-        Glide.with(getActivity())
-                .load(url_image+image_dokter)
-                .error(R.drawable.icon_user)
-                .into(imgDokter);
+        initGambar();
 
         txtNamaDokter.setText("Dr. "+preferencedConfig.getPreferenceNama());
         txtSpesialis.setText("Spesialis "+preferencedConfig.getPreferenceSpesialis());
@@ -119,6 +113,18 @@ public class ProfileFragment extends Fragment {
         return rootView;
     }
 
+    private void initGambar() {
+
+        final String url_image = "https://aplikasicerdas.net/haloqlinic/file/dokter/profile/";
+        String image_dokter = preferencedConfig.getPreferenceImg();
+
+        Glide.with(getActivity())
+                .load(url_image+image_dokter)
+                .error(R.drawable.icon_user)
+                .into(imgDokter);
+
+    }
+
     private void tampilDialog() {
 
         BottomSheetMaterialDialog mBottomSheetDialog = new BottomSheetMaterialDialog.Builder(getActivity())
@@ -157,6 +163,6 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
+        initGambar();
     }
 }

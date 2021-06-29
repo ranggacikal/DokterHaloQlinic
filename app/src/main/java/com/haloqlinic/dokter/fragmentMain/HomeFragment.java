@@ -1,6 +1,7 @@
 package com.haloqlinic.dokter.fragmentMain;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -8,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +27,11 @@ import com.haloqlinic.dokter.adapter.JadwalKonsultasiAdapter;
 import com.haloqlinic.dokter.api.ConfigRetrofit;
 import com.haloqlinic.dokter.model.listKonsultasi.DataItem;
 import com.haloqlinic.dokter.model.listKonsultasi.ResponseDataKonsultasi;
+import com.haloqlinic.dokter.model.status.ResponseItem;
+import com.haloqlinic.dokter.model.status.ResponseStatus;
 import com.haloqlinic.dokter.model.statusDokter.ResponseStatusDokter;
+import com.onesignal.OSDeviceState;
+import com.onesignal.OneSignal;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import java.util.List;
@@ -41,6 +47,10 @@ public class HomeFragment extends Fragment {
 
     private SharedPreferencedConfig preferencedConfig;
     LinearLayout linearKonsultasi, linearJadwalKonsultasi;
+    String status;
+    private static final String ONESIGNAL_APP_ID = "e0a7b99b-6b25-4557-8e4a-b276c9ab8d3e";
+    @SuppressLint("UseSwitchCompatOrMaterialCode") Switch switchButton;
+    String token, user_id;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -62,7 +72,17 @@ public class HomeFragment extends Fragment {
         TextView txtNamaDokter = rootView.findViewById(R.id.txt_nama_dokter_home);
         linearKonsultasi = rootView.findViewById(R.id.linear_konsultasi_home);
         linearJadwalKonsultasi = rootView.findViewById(R.id.linear_jadwal_konsultasi_home);
-        @SuppressLint("UseSwitchCompatOrMaterialCode") Switch switchButton = rootView.findViewById(R.id.simpleSwitch);
+        switchButton = rootView.findViewById(R.id.simpleSwitch);
+
+        OneSignal.initWithContext(getActivity());
+        OneSignal.setAppId(ONESIGNAL_APP_ID);
+
+        OSDeviceState device = OneSignal.getDeviceState();
+
+        token = device.getPushToken();
+        user_id = device.getUserId();
+
+        loadStatus();
 
         switchButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -100,6 +120,52 @@ public class HomeFragment extends Fragment {
                 });
 
         return rootView;
+    }
+
+    private void loadStatus() {
+
+        ProgressDialog progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Memuat Status Dokter");
+        progressDialog.show();
+
+        ConfigRetrofit.service.status(preferencedConfig.getPreferenceIdDokter(), user_id).enqueue(new Callback<ResponseStatus>() {
+            @Override
+            public void onResponse(Call<ResponseStatus> call, Response<ResponseStatus> response) {
+                if (response.isSuccessful()){
+
+                    progressDialog.dismiss();
+                    List<ResponseItem> dataStatus = response.body().getResponse();
+
+                    for (int i = 0; i<dataStatus.size(); i++){
+
+                        status = dataStatus.get(i).getStatus();
+
+                    }
+
+                    Log.d("CheckStatusDokter", "onResponse: "+status);
+                    Log.d("CheckStatusDokter", "Player ID: "+user_id);
+                    if (status.equals("1")){
+
+                        switchButton.setChecked(true);
+                        switchButton.setText("ONLINE");
+
+                    }else{
+                        switchButton.setChecked(false);
+                        switchButton.setText("OFFLINE");
+                    }
+                }else{
+                    progressDialog.dismiss();
+                    Toast.makeText(getActivity(), "Gagal Memuat Data", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseStatus> call, Throwable t) {
+                progressDialog.dismiss();
+                Toast.makeText(getActivity(), "Error: "+t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     private void offline() {

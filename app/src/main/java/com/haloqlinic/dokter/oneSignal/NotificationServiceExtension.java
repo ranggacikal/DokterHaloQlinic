@@ -1,6 +1,7 @@
 package com.haloqlinic.dokter.oneSignal;
 
 import android.content.Context;
+import android.net.Uri;
 
 import com.haloqlinic.dokter.R;
 import com.onesignal.OSMutableNotification;

@@ -39,7 +39,7 @@ public class DetailProdukActivity extends AppCompatActivity {
     private ActivityDetailProdukBinding binding;
 
     String nama_produk, id_transaksi, id_dokter, id_produk, id_member, berat,
-            jumlah, harga, id_variasi, variasi, aturan, keterangan, stock, id_customer;
+            jumlah, harga, id_variasi, variasi, aturan, keterangan, stock, id_customer, jenis_obat;
     List<VariasiItem> variasiItems = new ArrayList<>();
 
     private SharedPreferencedConfig preferencedConfig;
@@ -56,6 +56,7 @@ public class DetailProdukActivity extends AppCompatActivity {
         nama_produk = getIntent().getStringExtra("nama_produk");
         id_transaksi = getIntent().getStringExtra("id_transaksi");
         id_customer = getIntent().getStringExtra("id_customer");
+        jenis_obat = getIntent().getStringExtra("jenis_obat");
 
         loadData();
 
@@ -190,7 +191,8 @@ public class DetailProdukActivity extends AppCompatActivity {
 
     private void loadData() {
 
-        ConfigRetrofit.service.cariProduk(nama_produk).enqueue(new Callback<ResponseCariProduk>() {
+        ConfigRetrofit.service.cariProduk(jenis_obat, preferencedConfig.getPreferenceIdDokter(), nama_produk)
+                .enqueue(new Callback<ResponseCariProduk>() {
             @Override
             public void onResponse(Call<ResponseCariProduk> call, Response<ResponseCariProduk> response) {
                 if (response.isSuccessful()){

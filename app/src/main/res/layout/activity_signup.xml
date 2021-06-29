@@ -51,6 +51,7 @@
     </LinearLayout>
 
     <ScrollView
+        android:id="@+id/scroll_sign_up"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/linear_signup"
@@ -58,7 +59,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <com.google.android.material.textfield.TextInputLayout
@@ -383,6 +384,143 @@
                     android:textSize="17sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_input_no_str"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="40dp"
+                app:boxCornerRadiusBottomEnd="10dp"
+                app:boxCornerRadiusBottomStart="10dp"
+                app:boxCornerRadiusTopEnd="10dp"
+                app:boxCornerRadiusTopStart="10dp">
+
+                <EditText
+                    android:id="@+id/edt_signup_no_str"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:fontFamily="@font/robotoreguler"
+                    android:gravity="top|left"
+                    android:hint="No. STR"
+                    android:inputType="number"
+                    android:padding="8dp"
+                    android:scrollbars="vertical"
+                    android:textColor="@color/black"
+                    android:textSize="17sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_input_alumni"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="40dp"
+                app:boxCornerRadiusBottomEnd="10dp"
+                app:boxCornerRadiusBottomStart="10dp"
+                app:boxCornerRadiusTopEnd="10dp"
+                app:boxCornerRadiusTopStart="10dp">
+
+                <EditText
+                    android:id="@+id/edt_signup_alumni"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:fontFamily="@font/robotoreguler"
+                    android:gravity="top|left"
+                    android:hint="Alumni"
+                    android:inputType="textCapWords"
+                    android:padding="8dp"
+                    android:scrollbars="vertical"
+                    android:textColor="@color/black"
+                    android:textSize="17sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_input_tempat_praktik"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="40dp"
+                app:boxCornerRadiusBottomEnd="10dp"
+                app:boxCornerRadiusBottomStart="10dp"
+                app:boxCornerRadiusTopEnd="10dp"
+                app:boxCornerRadiusTopStart="10dp">
+
+                <EditText
+                    android:id="@+id/edt_signup_tempat_praktik"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:fontFamily="@font/robotoreguler"
+                    android:gravity="top|left"
+                    android:hint="Tempat Praktik"
+                    android:inputType="textCapWords"
+                    android:padding="8dp"
+                    android:scrollbars="vertical"
+                    android:textColor="@color/black"
+                    android:textSize="17sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="3dp"
+                android:fontFamily="@font/robotoreguler"
+                android:paddingStart="10dp"
+                android:text="Pengalaman"
+                android:textSize="17sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="200dp"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="20dp"
+                    android:orientation="vertical"
+                    android:background="@drawable/background_circle_black">
+
+                    <TextView
+                        android:id="@+id/text_signup_pengalaman"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Tanggal Pengalaman"
+                        android:fontFamily="@font/robotoreguler"
+                        android:gravity="center_vertical"
+                        android:textSize="17sp"
+                        android:layout_marginStart="10dp"/>
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btn_signup_pilih_tanggal"
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/bg_button_red"
+                    android:text="Pilih Tanggal"
+                    android:textSize="10sp"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/robotobold"/>
+
+            </LinearLayout>
 
             <Button
                 android:id="@+id/btn_signup"

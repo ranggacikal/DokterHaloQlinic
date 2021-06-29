@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.haloqlinic.dokter.CariResepActivity;
 import com.haloqlinic.dokter.DetailProdukActivity;
 import com.haloqlinic.dokter.R;
 import com.haloqlinic.dokter.TambahResepObatActivity;
@@ -29,12 +30,12 @@ public class CariObatAdapter extends RecyclerView.Adapter<CariObatAdapter.CariOb
 
     Context context;
     List<DataItem> dataProduk;
-    TambahResepObatActivity tambahResepObatActivity;
+    CariResepActivity cariResepActivity;
 
-    public CariObatAdapter(Context context, List<DataItem> dataProduk, TambahResepObatActivity tambahResepObatActivity) {
+    public CariObatAdapter(Context context, List<DataItem> dataProduk, CariResepActivity cariResepActivity) {
         this.context = context;
         this.dataProduk = dataProduk;
-        this.tambahResepObatActivity = tambahResepObatActivity;
+        this.cariResepActivity = cariResepActivity;
     }
 
     @NonNull
@@ -68,8 +69,9 @@ public class CariObatAdapter extends RecyclerView.Adapter<CariObatAdapter.CariOb
                     public void onClick(View v) {
                         Intent intent = new Intent(context, DetailProdukActivity.class);
                         intent.putExtra("nama_produk", dataProduk.get(position).getNamaProduk());
-                        intent.putExtra("id_transaksi", tambahResepObatActivity.id_transaksi);
-                        intent.putExtra("id_customer", tambahResepObatActivity.id_customer);
+                        intent.putExtra("id_transaksi", cariResepActivity.id_transaksi);
+                        intent.putExtra("id_customer", cariResepActivity.id_customer);
+                        intent.putExtra("jenis_obat", cariResepActivity.jenisObat);
                         context.startActivity(intent);
                     }
                 });

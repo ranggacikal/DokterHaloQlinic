@@ -10,7 +10,9 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +22,7 @@ import com.haloqlinic.dokter.model.notifChat.ResponseNotif;
 import com.haloqlinic.dokter.model.updateStatus.ResponseUpdateStatus;
 import com.mesibo.api.Mesibo;
 import com.mesibo.calls.api.MesiboCall;
+import com.mesibo.messaging.MesiboMessagingFragment;
 import com.mesibo.messaging.MesiboUI;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
@@ -60,6 +63,9 @@ public class ChatActivity extends AppCompatActivity implements Mesibo.Connection
     private SharedPreferencedConfig preferencedConfig;
     String player_id, id_transaksi, id_customer;
     Button btnAkhiriKonsultasi;
+    LinearLayout linearChat;
+    FrameLayout frameChat;
+    String message;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +83,8 @@ public class ChatActivity extends AppCompatActivity implements Mesibo.Connection
         imgOnline = findViewById(R.id.img_online);
         imgOffline = findViewById(R.id.img_offline);
         btnAkhiriKonsultasi = findViewById(R.id.btn_akhiri_konsultasi);
+        linearChat = findViewById(R.id.linear_chat);
+        frameChat = findViewById(R.id.frame_chat);
 
         String token = getIntent().getStringExtra("token");
         String nama = getIntent().getStringExtra("nama");
@@ -110,6 +118,11 @@ public class ChatActivity extends AppCompatActivity implements Mesibo.Connection
             @Override
             public void onClick(View v) {
                 MesiboUI.launchMessageView(ChatActivity.this, mRemoteUser.address, 0);
+
+//                Intent intent = new Intent(ChatActivity.this, MessagingActivity.class);
+//                intent.putExtra("address", mRemoteUser.address);
+//                startActivity(intent);
+
             }
         });
 
@@ -236,8 +249,8 @@ public class ChatActivity extends AppCompatActivity implements Mesibo.Connection
     @Override
     public boolean Mesibo_onMessage(Mesibo.MessageParams messageParams, byte[] bytes) {
         try {
-            String message = new String(bytes, "UTF-8");
-            pushNotification();
+            message = new String(bytes, "UTF-8");
+
 
         } catch (Exception e) {
         }
@@ -269,13 +282,26 @@ public class ChatActivity extends AppCompatActivity implements Mesibo.Connection
 
     @Override
     public void Mesibo_onMessageStatus(Mesibo.MessageParams messageParams) {
-        String status = String.valueOf(messageParams);
-        Log.d("statusMessageCheck", "Mesibo_onMessageStatus: "+status);
-//        pushNotification();
+
+        int status = messageParams.getStatus();
+        int expiry = messageParams.duration;
+        long id = messageParams.mid;
+        boolean incoming = messageParams.isIncoming();
+        Log.d("cekStatus", "id: "+id);
+        Log.d("cekStatus", "expiry: "+expiry);
+        Log.d("cekStatus", "incoming: "+incoming);
+        Log.d("cekStatus", "message: "+message);
+        Log.d("cekStatus", "Mesibo_onMessageStatus: "+status);
+
+        if (status == 1 && id != 0){
+            pushNotification();
+        }
     }
 
     @Override
     public void Mesibo_onActivity(Mesibo.MessageParams messageParams, int i) {
+
+        Log.d("cekMesiboActivity", "Mesibo_onActivity: "+messageParams.peer);
 
     }
 

@@ -14,7 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DokterHaloQlinic"
         android:usesCleartextTraffic="true">
-        <activity android:name=".JadwalKonsultasiActivity"></activity>
+        <activity android:name=".CariResepActivity"></activity>
+        <activity android:name=".MessagingActivity" />
+        <activity android:name=".JadwalKonsultasiActivity" />
         <activity android:name=".KonsultasiActivity" />
         <activity
             android:name=".ListResepActivity"
@@ -40,7 +42,7 @@
 
         <meta-data
             android:name="com.onesignal.NotificationServiceExtension"
-            android:value="com.company.NotificationServiceExtension" />
+            android:value="com.haloqlinic.dokter.oneSignal.NotificationServiceExtension" />
     </application>
 
 </manifest>

@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 public class VariasiItem{
 
 	@SerializedName("variasi")
-	private Object variasi;
+	private String variasi;
 
 	@SerializedName("id")
 	private String id;
@@ -13,11 +13,11 @@ public class VariasiItem{
 	@SerializedName("stok")
 	private String stok;
 
-	public void setVariasi(Object variasi){
+	public void setVariasi(String variasi){
 		this.variasi = variasi;
 	}
 
-	public Object getVariasi(){
+	public String getVariasi(){
 		return variasi;
 	}
 

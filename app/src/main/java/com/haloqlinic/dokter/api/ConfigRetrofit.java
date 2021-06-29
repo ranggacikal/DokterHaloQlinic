@@ -1,5 +1,7 @@
 package com.haloqlinic.dokter.api;
 
+import org.jetbrains.annotations.NotNull;
+
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;

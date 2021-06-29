@@ -1,8 +1,11 @@
 package com.haloqlinic.dokter;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,6 +13,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.haloqlinic.dokter.SharedPreference.SharedPreferencedConfig;
 import com.haloqlinic.dokter.api.ConfigRetrofit;
 import com.haloqlinic.dokter.databinding.ActivityEditAkunBinding;
@@ -20,13 +25,18 @@ import com.haloqlinic.dokter.model.kota.ResponseDatakota;
 import com.haloqlinic.dokter.model.kota.ResponseItem;
 import com.haloqlinic.dokter.model.provinsi.DataItem;
 import com.haloqlinic.dokter.model.provinsi.ResponseDataProvinsi;
+import com.haloqlinic.dokter.model.updatePhoto.ResponseUpdatePhoto;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import dev.shreyaspatil.MaterialDialog.BottomSheetMaterialDialog;
 import dev.shreyaspatil.MaterialDialog.interfaces.DialogInterface;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -54,6 +64,11 @@ public class EditAkunActivity extends AppCompatActivity {
     String id_kecamatan_post = "";
     String jenis_kelamin_post = "";
 
+    Uri uri1;
+
+    String nama_file1 = "";
+    private String PicturePath1 = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +81,21 @@ public class EditAkunActivity extends AppCompatActivity {
         ArrayList<String> jenisKelaminList = new ArrayList<>();
         jenisKelaminList.add("Laki - Laki");
         jenisKelaminList.add("Perempuan");
+
+        initImage();
+
+        PushDownAnim.setPushDownAnimTo(binding.imgDokterProfile)
+                .setScale( MODE_SCALE, 0.89f  )
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ImagePicker.with(EditAkunActivity.this)
+                                .crop()	    			//Crop image(Optional), Check Customization for more option
+                                .compress(1024)			//Final image size will be less than 1 MB(Optional)
+                                .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
+                                .start();
+                    }
+                });
 
         binding.imgBackEditAkun.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,8 +155,6 @@ public class EditAkunActivity extends AppCompatActivity {
 
         initData();
 
-
-
         binding.spinnerProvinsiEditAkun.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -176,6 +204,90 @@ public class EditAkunActivity extends AppCompatActivity {
                         tampilDialog();
                     }
                 });
+
+
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+
+
+            uri1 = data.getData();
+            nama_file1 = uri1.getLastPathSegment();
+            binding.imgDokterProfile.setImageURI(uri1);
+            PicturePath1 = uri1.getPath();
+
+            Log.d("checkPath", "onActivityResult: "+PicturePath1);
+
+            updatePhoto();
+
+        }else if (resultCode == ImagePicker.RESULT_ERROR){
+            Toast.makeText(this, ImagePicker.getError(data), Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(this, "Cancel", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void updatePhoto() {
+
+        ProgressDialog progressDialog = new ProgressDialog(EditAkunActivity.this);
+        progressDialog.setMessage("Mengajukan Penukaran Produk");
+        progressDialog.setTitle("Mohon Tunggu");
+        progressDialog.show();
+
+        File file = new File(PicturePath1);
+
+        RequestBody requestFile =
+                RequestBody.create(file, MediaType.parse("multipart/form-data"));
+
+        MultipartBody.Part body =
+                MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+
+        RequestBody id_dokter = RequestBody.create(preferencedConfig.getPreferenceIdDokter(),
+                MediaType.parse("text/plain"));
+
+        ConfigRetrofit.service.updatePhoto(id_dokter, body).enqueue(new Callback<ResponseUpdatePhoto>() {
+            @Override
+            public void onResponse(Call<ResponseUpdatePhoto> call, Response<ResponseUpdatePhoto> response) {
+                if (response.isSuccessful()){
+
+                    progressDialog.dismiss();
+                    String nama_img = response.body().getImg();
+                    int code = response.code();
+                    Log.d("codeUpdateImage", "onResponse: "+code);
+                    preferencedConfig.savePrefString(SharedPreferencedConfig.PREFERENCE_IMG, nama_img);
+                    Toast.makeText(EditAkunActivity.this, "Berhasil Edit Image", Toast.LENGTH_SHORT).show();
+                    initImage();
+
+                }else{
+                    progressDialog.dismiss();
+                    int code = response.code();
+                    Log.d("codeUpdateImage", "onResponse: "+code);
+                    Toast.makeText(EditAkunActivity.this, "Gagal Edit Image", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseUpdatePhoto> call, Throwable t) {
+                progressDialog.dismiss();
+                Toast.makeText(EditAkunActivity.this, "Error: "+t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    private void initImage() {
+
+        String url_image = "https://aplikasicerdas.net/haloqlinic/file/dokter/profile/";
+        String image = preferencedConfig.getPreferenceImg();
+
+        Glide.with(EditAkunActivity.this)
+                .load(url_image+image)
+                .error(R.drawable.icon_user)
+                .into(binding.imgDokterProfile);
 
     }
 

@@ -16,20 +16,26 @@ import com.haloqlinic.dokter.model.provinsi.ResponseDataProvinsi;
 import com.haloqlinic.dokter.model.resetPassword.ResponseResetPassword;
 import com.haloqlinic.dokter.model.saldo.ResponseDataSaldo;
 import com.haloqlinic.dokter.model.signUp.ResponseSignup;
+import com.haloqlinic.dokter.model.status.ResponseStatus;
 import com.haloqlinic.dokter.model.statusDokter.ResponseStatusDokter;
 import com.haloqlinic.dokter.model.updateKonsultasi.ResponseUpdateKonsultasi;
 import com.haloqlinic.dokter.model.updatePassword.ResponseUpdatePassword;
+import com.haloqlinic.dokter.model.updatePhoto.ResponseUpdatePhoto;
 import com.haloqlinic.dokter.model.updateRecipe.ResponseUpdateResep;
 import com.haloqlinic.dokter.model.updateStatus.ResponseUpdateStatus;
 import com.haloqlinic.dokter.model.withdrawal.ResponseWithdrawal;
 
 import java.util.ArrayList;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 
 public interface ApiService {
 
@@ -112,7 +118,11 @@ public interface ApiService {
                                 @Field("sip") String sip,
                                 @Field("spesialis") String spesialis,
                                 @Field("jk") String jk,
-                                @Field("tentang") String tentang);
+                                @Field("tentang") String tentang,
+                                @Field("str") String str,
+                                @Field("alumni") String alumni,
+                                @Field("tempat_praktik") String tempat_praktik,
+                                @Field("pengalaman") String pengalaman);
 
     @FormUrlEncoded
     @POST("update_account.php")
@@ -120,12 +130,19 @@ public interface ApiService {
                                             @Field("status") String status);
 
     @FormUrlEncoded
+    @POST("status.php")
+    Call<ResponseStatus> status(@Field("id_dokter") String id_dokter,
+                                @Field("player_id") String player_id);
+
+    @FormUrlEncoded
     @POST("notif.php")
     Call<ResponseNotif> notifChat(@Field("player_id") String player_id);
 
     @FormUrlEncoded
     @POST("cari_produk.php")
-    Call<ResponseCariProduk> cariProduk(@Field("nama_produk") String nama_produk);
+    Call<ResponseCariProduk> cariProduk(@Field("jenis") String jenis,
+                                        @Field("id_dokter") String id_dokter,
+                                        @Field("nama_produk") String nama_produk);
 
     @FormUrlEncoded
     @POST("update_status.php")
@@ -157,5 +174,10 @@ public interface ApiService {
                                           @Field("jumlah[]") ArrayList<String> jumlah,
                                           @Field("harga[]") ArrayList<String> harga,
                                           @Field("berat_item[]") ArrayList<String> berat_item);
+
+    @Multipart
+    @POST("update_photo.php")
+    Call<ResponseUpdatePhoto> updatePhoto(@Part("id_customer") RequestBody id_customer,
+                                          @Part MultipartBody.Part file);
 
 }

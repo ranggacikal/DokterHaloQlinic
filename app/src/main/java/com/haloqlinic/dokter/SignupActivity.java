@@ -2,6 +2,7 @@ package com.haloqlinic.dokter;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
@@ -9,6 +10,7 @@ import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -24,8 +26,11 @@ import com.haloqlinic.dokter.model.provinsi.ResponseDataProvinsi;
 import com.haloqlinic.dokter.model.signUp.ResponseSignup;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,7 +47,10 @@ public class SignupActivity extends AppCompatActivity {
     List<ResponseItem> dataKota;
     List<com.haloqlinic.dokter.model.kecamatan.ResponseItem> dataKecamatan;
 
-    String id_kategori, id_provinsi, jenis_kelamin, id_kota, id_kecamatan;
+    String id_kategori, id_provinsi, jenis_kelamin, id_kota, id_kecamatan, tanggal;
+
+    private DatePickerDialog datePickerDialog;
+    private SimpleDateFormat dateFormatter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +60,17 @@ public class SignupActivity extends AppCompatActivity {
         setContentView(view);
 
         initKategoriDokter();
+
+        dateFormatter = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+
+        PushDownAnim.setPushDownAnimTo(binding.btnSignupPilihTanggal)
+                .setScale( MODE_SCALE, 0.89f  )
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showDateDialog();
+                    }
+                });
 
         binding.spinnerSignupKategori.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -137,6 +156,27 @@ public class SignupActivity extends AppCompatActivity {
 
     }
 
+    private void showDateDialog() {
+
+        Calendar newCalendar = Calendar.getInstance();
+        datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+
+                Calendar newDate = Calendar.getInstance();
+                newDate.set(year, monthOfYear, dayOfMonth);
+
+                binding.textSignupPengalaman.setText(dateFormatter.format(newDate.getTime()));
+                tanggal = dateFormatter.format(newDate.getTime());
+            }
+
+        }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+
+        datePickerDialog.show();
+
+    }
+
     private void signUp() {
 
         String nama = binding.edtSignupNama.getText().toString();
@@ -147,6 +187,9 @@ public class SignupActivity extends AppCompatActivity {
         String no_sip = binding.edtSignupNoSip.getText().toString();
         String spesialis = binding.edtSignupSpesialis.getText().toString();
         String tentang = binding.edtSignupTentang.getText().toString();
+        String str = binding.edtSignupNoStr.getText().toString();
+        String alumni = binding.edtSignupAlumni.getText().toString();
+        String tempat_praktik = binding.edtSignupTempatPraktik.getText().toString();
 
         if (nama.isEmpty()){
             binding.edtSignupNama.setError("Nama tidak boleh kosng");
@@ -196,12 +239,35 @@ public class SignupActivity extends AppCompatActivity {
             return;
         }
 
+        if (str.isEmpty()){
+            binding.edtSignupNoStr.setError("No. STR tidak boleh kosong");
+            binding.edtSignupNoStr.requestFocus();
+            return;
+        }
+
+        if (alumni.isEmpty()){
+            binding.edtSignupAlumni.setError("Alumni tidak boleh kosong");
+            binding.edtSignupAlumni.requestFocus();
+            return;
+        }
+
+        if (tempat_praktik.isEmpty()){
+            binding.edtSignupTempatPraktik.setError("Tempat Praktik tidak boleh kosong");
+            binding.edtSignupTempatPraktik.requestFocus();
+            return;
+        }
+
+        if (tanggal.isEmpty() || tanggal == null){
+            Toast.makeText(this, "Anda belum memilih tanggal", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         ProgressDialog progressDialog = new ProgressDialog(SignupActivity.this);
         progressDialog.setMessage("Signup");
         progressDialog.show();
 
         ConfigRetrofit.service.signup(id_kategori, email, password, nama, alamat, no_hp, id_kecamatan,
-                id_kota, id_provinsi, no_sip, spesialis, jenis_kelamin, tentang).enqueue(new Callback<ResponseSignup>() {
+                id_kota, id_provinsi, no_sip, spesialis, jenis_kelamin, tentang, str, alumni, tempat_praktik, tanggal).enqueue(new Callback<ResponseSignup>() {
             @Override
             public void onResponse(Call<ResponseSignup> call, Response<ResponseSignup> response) {
                 if (response.isSuccessful()){
