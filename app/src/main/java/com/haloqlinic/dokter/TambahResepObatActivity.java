@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -45,8 +46,16 @@ public class TambahResepObatActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
+        if (dataResep!=null) {
+
+            dataResep.clear();
+
+        }
+
         id_transaksi = getIntent().getStringExtra("id_transaksi");
         id_customer = getIntent().getStringExtra("id_customer");
+
+        Log.d("cekIdTransaksi", "onCreate: "+ id_transaksi);
 
         binding.recyclerListResep.setHasFixedSize(true);
         binding.recyclerListResep.setLayoutManager(new LinearLayoutManager(TambahResepObatActivity.this));
@@ -117,8 +126,11 @@ public class TambahResepObatActivity extends AppCompatActivity {
                 if (response.isSuccessful()){
 
                     progressDialogUpdate.dismiss();
+                    Log.d("cekLisParam", "idPesan: "+id_pesan);
+                    Log.d("cekLisParam", "jumlah: "+jumlah);
+                    Log.d("cekLisParam", "harga: "+harga);
+                    Log.d("cekLisParam", "beratiItem: "+berat_item);
                     Toast.makeText(TambahResepObatActivity.this, "Berhasil kirim list obat", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(TambahResepObatActivity.this, MainActivity.class));
                     finish();
 
                 }else{
@@ -136,7 +148,7 @@ public class TambahResepObatActivity extends AppCompatActivity {
 
     }
 
-    private void loadDataResep() {
+    public void loadDataResep() {
 
         ProgressDialog progressDialog = new ProgressDialog(TambahResepObatActivity.this);
         progressDialog.setMessage("Memuat Data Resep");
@@ -148,8 +160,10 @@ public class TambahResepObatActivity extends AppCompatActivity {
                 if (response.isSuccessful()){
 
                     progressDialog.dismiss();
+                    Log.d("paramIdTransaksi", "onResponse: "+id_transaksi);
                     dataResep = response.body().getData();
-                    ListObatAdapter adapter = new ListObatAdapter(TambahResepObatActivity.this, dataResep);
+                    ListObatAdapter adapter = new ListObatAdapter(TambahResepObatActivity.this,
+                            dataResep, TambahResepObatActivity.this);
                     binding.recyclerListResep.setAdapter(adapter);
 
                 }else{

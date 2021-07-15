@@ -1,5 +1,7 @@
 package com.haloqlinic.dokter.api;
 
+import com.haloqlinic.dokter.api.ApiService;
+
 import org.jetbrains.annotations.NotNull;
 
 import okhttp3.OkHttpClient;

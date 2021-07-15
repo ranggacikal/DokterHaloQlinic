@@ -117,32 +117,32 @@ public class ListResepActivity extends AppCompatActivity {
 
     private void loadDataResep() {
 
-        ProgressDialog progressDialog = new ProgressDialog(ListResepActivity.this);
-        progressDialog.setMessage("Memuat Data Resep");
-        progressDialog.dismiss();
-
-        ConfigRetrofit.service.dataResep(id_transaksi).enqueue(new Callback<ResponseDataRecipe>() {
-            @Override
-            public void onResponse(Call<ResponseDataRecipe> call, Response<ResponseDataRecipe> response) {
-                if (response.isSuccessful()){
-
-                    progressDialog.dismiss();
-                    dataResep = response.body().getData();
-                    ListObatAdapter adapter = new ListObatAdapter(ListResepActivity.this, dataResep);
-                    binding.recyclerListResepObat.setAdapter(adapter);
-
-                }else{
-                    progressDialog.dismiss();
-                    Toast.makeText(ListResepActivity.this, "Gagal Memuat Data", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseDataRecipe> call, Throwable t) {
-                progressDialog.dismiss();
-                Toast.makeText(ListResepActivity.this, "Error: "+t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+//        ProgressDialog progressDialog = new ProgressDialog(ListResepActivity.this);
+//        progressDialog.setMessage("Memuat Data Resep");
+//        progressDialog.dismiss();
+//
+//        ConfigRetrofit.service.dataResep(id_transaksi).enqueue(new Callback<ResponseDataRecipe>() {
+//            @Override
+//            public void onResponse(Call<ResponseDataRecipe> call, Response<ResponseDataRecipe> response) {
+//                if (response.isSuccessful()){
+//
+//                    progressDialog.dismiss();
+//                    dataResep = response.body().getData();
+//                    ListObatAdapter adapter = new ListObatAdapter(ListResepActivity.this, dataResep);
+//                    binding.recyclerListResepObat.setAdapter(adapter);
+//
+//                }else{
+//                    progressDialog.dismiss();
+//                    Toast.makeText(ListResepActivity.this, "Gagal Memuat Data", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ResponseDataRecipe> call, Throwable t) {
+//                progressDialog.dismiss();
+//                Toast.makeText(ListResepActivity.this, "Error: "+t.getMessage(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
     }
 }

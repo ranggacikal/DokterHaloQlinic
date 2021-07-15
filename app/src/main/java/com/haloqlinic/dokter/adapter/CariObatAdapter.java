@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -76,6 +78,9 @@ public class CariObatAdapter extends RecyclerView.Adapter<CariObatAdapter.CariOb
                     }
                 });
 
+        holder.relativeHapus.setVisibility(View.GONE);
+        holder.linearJumlah.setVisibility(View.GONE);
+
     }
 
     @Override
@@ -87,12 +92,16 @@ public class CariObatAdapter extends RecyclerView.Adapter<CariObatAdapter.CariOb
 
         ImageView imgProduk;
         TextView txtNama, txtHarga;
+        ImageView relativeHapus;
+        LinearLayout linearJumlah;
 
         public CariObatViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
             imgProduk = itemView.findViewById(R.id.img_item_resep_obat);
             txtNama = itemView.findViewById(R.id.text_item_nama_resep_obat);
             txtHarga = itemView.findViewById(R.id.text_item_harga_resep_obat);
+            relativeHapus = itemView.findViewById(R.id.img_delete_resep);
+            linearJumlah = itemView.findViewById(R.id.linear_jumlah_resep_obat);
         }
     }
 }

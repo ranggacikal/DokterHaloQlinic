@@ -162,7 +162,7 @@ public class DetailProdukActivity extends AppCompatActivity {
         progressDialog.show();
 
         ConfigRetrofit.service.tambahResep(id_transaksi, id_customer, id_dokter, id_produk, id_member, berat_post, jumlah, id_variasi,
-                variasi, aturan, keterangan, harga_post).enqueue(new Callback<ResponseTambahResep>() {
+                variasi, aturan, keterangan, harga).enqueue(new Callback<ResponseTambahResep>() {
             @Override
             public void onResponse(Call<ResponseTambahResep> call, Response<ResponseTambahResep> response) {
                 if (response.isSuccessful()){

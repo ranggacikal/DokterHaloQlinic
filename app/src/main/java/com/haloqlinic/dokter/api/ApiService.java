@@ -3,6 +3,7 @@ package com.haloqlinic.dokter.api;
 import com.haloqlinic.dokter.model.addRecipe.ResponseTambahResep;
 import com.haloqlinic.dokter.model.cariProduk.ResponseCariProduk;
 import com.haloqlinic.dokter.model.editAkun.ResponseEditAkun;
+import com.haloqlinic.dokter.model.hapusResep.ResponseHapusResep;
 import com.haloqlinic.dokter.model.kategoriDokter.ResponseKategoriDokter;
 import com.haloqlinic.dokter.model.kecamatan.ResponseDataKecamatan;
 import com.haloqlinic.dokter.model.kota.ResponseDatakota;
@@ -23,6 +24,7 @@ import com.haloqlinic.dokter.model.updatePassword.ResponseUpdatePassword;
 import com.haloqlinic.dokter.model.updatePhoto.ResponseUpdatePhoto;
 import com.haloqlinic.dokter.model.updateRecipe.ResponseUpdateResep;
 import com.haloqlinic.dokter.model.updateStatus.ResponseUpdateStatus;
+import com.haloqlinic.dokter.model.updateWaktuKonsul.ResponseUpdateWaktuKonsul;
 import com.haloqlinic.dokter.model.withdrawal.ResponseWithdrawal;
 
 import java.util.ArrayList;
@@ -179,5 +181,13 @@ public interface ApiService {
     @POST("update_photo.php")
     Call<ResponseUpdatePhoto> updatePhoto(@Part("id_customer") RequestBody id_customer,
                                           @Part MultipartBody.Part file);
+
+    @FormUrlEncoded
+    @POST("update_waktu_konsul.php")
+    Call<ResponseUpdateWaktuKonsul> updateWaktuKonsul(@Field("id_transaksi") String id_transaksi);
+
+    @FormUrlEncoded
+    @POST("delete_recipe.php")
+    Call<ResponseHapusResep> hapusResep(@Field("id_pesan") String id_pesan);
 
 }
