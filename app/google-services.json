@@ -41,6 +41,43 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:604829986355:android:918d4acf11cd8c0ade7d46",
+        "android_client_info": {
+          "package_name": "id.luvie.luviedokter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "604829986355-dkfn30e9umge7u6tis3906dq5tlf2olu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "id.luvie.luviedokter",
+            "certificate_hash": "bad21c8c7de588bdc54a0bde89c83983155739ec"
+          }
+        },
+        {
+          "client_id": "604829986355-7ue8a25ncejc13lce6gmstg1r8cokqqn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBQbJC9j-hgXQlKX1Nwz02NyF_4cSzs9E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "604829986355-7ue8a25ncejc13lce6gmstg1r8cokqqn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"

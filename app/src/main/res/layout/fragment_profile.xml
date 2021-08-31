@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".fragmentMain.ProfileFragment">
+    tools:context="id.luvie.luviedokter.fragmentMain.ProfileFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"

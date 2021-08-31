@@ -2,7 +2,7 @@
 <resources>
 
     <style name="MineCustomTabText" parent="TextAppearance.Design.Tab">
-        <item name="android:textSize">10sp</item>
+        <item name="android:textSize">15sp</item>
         <item name="textAllCaps">false</item>
         <item name="android:padding">2dp</item>
     </style>

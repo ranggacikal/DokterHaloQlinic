@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/white"
-    tools:context=".fragmentMain.ResepObatFragment">
+    tools:context="id.luvie.luviedokter.fragmentMain.ResepObatFragment">
 
 
     <LinearLayout

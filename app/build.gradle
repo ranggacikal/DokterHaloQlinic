@@ -77,9 +77,9 @@ dependencies {
     implementation 'com.afollestad.material-dialogs:input:3.3.0'
 
     //Mesibo
-    implementation 'com.mesibo.api:mesibo:1.2.89'
-    implementation 'com.mesibo.api:calls:1.2.90'
-    implementation 'com.mesibo.api:ui:1.2.89'
+    implementation 'com.mesibo.api:mesibo:1.6.4'
+    implementation 'com.mesibo.api:calls:1.6.4'
+    implementation 'com.mesibo.api:ui:1.6.4'
 
     //OneSignal
     implementation 'com.onesignal:OneSignal:[4.0.0, 4.99.99]'

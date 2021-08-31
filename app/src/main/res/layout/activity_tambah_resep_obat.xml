@@ -4,12 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TambahResepObatActivity">
+    tools:context="id.luvie.luviedokter.TambahResepObatActivity">
 
     <LinearLayout
+        android:layout_above="@+id/btn_kirim_resep"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/btn_lihat_list_resep"
+        android:layout_marginBottom="15dp"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -36,73 +37,170 @@
 
         </RelativeLayout>
 
-        <RelativeLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginEnd="15dp">
+            android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/textDariKlinik"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Resep Dari Klinik"
-                android:textSize="15sp"
-                android:textColor="@color/black"
-                android:layout_centerVertical="true"
-                android:fontFamily="@font/robotobold"/>
-
-            <Button
-                android:id="@+id/btn_resep_klinik"
-                android:layout_width="170dp"
-                android:layout_height="40dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:background="@drawable/bg_border_green"
-                android:text="Ambil Resep Obat Disini >"
-                android:textSize="10sp"
-                android:textColor="@color/md_grey_500"/>
+            <LinearLayout
+                android:id="@+id/linear_scroll"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
 
-        </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/relative_klinik"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="15dp">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginEnd="15dp">
+                    <TextView
+                        android:id="@+id/textDariKlinik"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:fontFamily="@font/robotobold"
+                        android:text="Resep Dari Klinik"
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
 
-            <TextView
-                android:id="@+id/textDariLuarKlinik"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Resep Dari Luar Klinik"
-                android:textSize="15sp"
-                android:textColor="@color/black"
-                android:layout_centerVertical="true"
-                android:fontFamily="@font/robotobold"/>
-
-            <Button
-                android:id="@+id/btn_resep_luar_klinik"
-                android:layout_width="170dp"
-                android:layout_height="40dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:background="@drawable/bg_border_green"
-                android:text="Ambil Resep Obat Disini >"
-                android:textSize="10sp"
-                android:textColor="@color/md_grey_500"/>
+                    <Button
+                        android:id="@+id/btn_resep_klinik"
+                        android:layout_width="170dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/bg_border_green"
+                        android:text="Ambil Resep Obat Disini >"
+                        android:textColor="@color/black"
+                        android:textSize="10sp" />
 
 
-        </RelativeLayout>
+                </RelativeLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_list_resep"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="15dp">
+
+                    <TextView
+                        android:id="@+id/textDariLuarKlinik"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:fontFamily="@font/robotobold"
+                        android:text="Resep Dari Luar Klinik"
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
+
+                    <Button
+                        android:id="@+id/btn_resep_luar_klinik"
+                        android:layout_width="170dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/bg_border_green"
+                        android:text="Ambil Resep Obat Disini >"
+                        android:textColor="@color/black"
+                        android:textSize="10sp" />
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="15dp">
+
+                    <TextView
+                        android:id="@+id/textTindakan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:fontFamily="@font/robotobold"
+                        android:text="Pilih Tindakan"
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
+
+                    <Button
+                        android:id="@+id/btn_pilih_tindakan"
+                        android:layout_width="170dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/bg_border_green"
+                        android:text="Pilih Tindakan Disini >"
+                        android:textColor="@color/black"
+                        android:textSize="10sp" />
+
+
+                </RelativeLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_list_resep"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layout_input_catatan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginTop="5dp">
+
+                    <EditText
+                        android:id="@+id/edt_catatan_resep_obat"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_daftar"
+                        android:ems="10"
+                        android:fontFamily="@font/robotobold"
+                        android:hint="Catatan"
+                        android:lines="12"
+                        android:minLines="4"
+                        android:gravity="top|left"
+                        android:maxLines="11"
+                        android:scrollbars="vertical"
+                        android:inputType="textMultiLine"
+                        android:padding="8dp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layout_input_diagnosa"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginTop="15dp">
+
+                    <EditText
+                        android:id="@+id/edt_diagnosa_resep"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_daftar"
+                        android:ems="10"
+                        android:fontFamily="@font/robotobold"
+                        android:hint="Diagnosis"
+                        android:lines="12"
+                        android:minLines="6"
+                        android:gravity="top|left"
+                        android:maxLines="11"
+                        android:scrollbars="vertical"
+                        android:inputType="textMultiLine"
+                        android:padding="8dp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
 
     </LinearLayout>
 
@@ -110,14 +208,13 @@
         android:id="@+id/btn_kirim_resep"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@drawable/bg_button_red"
-        android:text="Kirim Resep"
-        android:textColor="@color/white"
-        android:fontFamily="@font/robotobold"
+        android:layout_alignParentBottom="true"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
-        android:layout_marginTop="10dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20dp"/>
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/bg_button_red"
+        android:fontFamily="@font/robotobold"
+        android:text="Kirim Resep"
+        android:textColor="@color/white" />
 
 </RelativeLayout>

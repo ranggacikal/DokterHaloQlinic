@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/green"
     android:orientation="vertical"
-    tools:context=".ChatActivity">
+    tools:context="id.luvie.luviedokter.ChatActivity">
 
     <FrameLayout
         android:id="@+id/frame_chat"
@@ -81,7 +81,7 @@
             android:layout_height="200dp"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
-            android:src="@drawable/profile" />
+            android:src="@drawable/ic_edit_profile" />
 
         <TextView
             android:id="@+id/text_nama_pasien_konsultasi"

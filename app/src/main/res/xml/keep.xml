@@ -1,3 +1,3 @@
 <resources
     xmlns:tools="http://schemas.android.com/tools"
-    tools:keep="@raw/notification_ring.mp3"/>
+    tools:keep="@raw/starlite.mp3"/>

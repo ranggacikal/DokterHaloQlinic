@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/green"
-    tools:context=".fragmentMain.HistoryChatFragment">
+    tools:context="id.luvie.luviedokter.fragmentMain.HistoryChatFragment">
 
     <LinearLayout
         android:id="@+id/linear_history_chat"
@@ -46,30 +46,11 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tab_layout_history_chat"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_history_chat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:tabGravity="fill"
-                android:layout_marginTop="20dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp"
-                app:tabMode="fixed"
-                android:layout_alignParentBottom="true"
-                app:tabTextAppearance="@style/MineCustomTabText"
-                app:tabIndicatorColor="@color/green"
-                app:tabSelectedTextColor="@color/red"
-                style="@style/MineCustomTabText"
-                android:background="@android:color/white" />
-
-            <FrameLayout
-                android:id="@+id/frame_history_chat"
-                android:background="@android:color/white"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"/>
+                android:layout_margin="10dp"/>
 
 
         </LinearLayout>

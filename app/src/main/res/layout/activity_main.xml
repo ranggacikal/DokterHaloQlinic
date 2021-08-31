@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context="id.luvie.luviedokter.MainActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -31,15 +31,15 @@
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout_home"
+        style="@style/MineCustomTabText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabGravity="fill"
-        app:tabMode="fixed"
         android:layout_alignParentBottom="true"
-        app:tabTextAppearance="@style/MineCustomTabText"
+        android:background="@android:color/white"
+        app:tabGravity="fill"
         app:tabIndicatorColor="@color/green"
+        app:tabMode="fixed"
         app:tabSelectedTextColor="@color/red"
-        style="@style/MineCustomTabText"
-        android:background="@android:color/white" />
+        app:tabTextAppearance="@style/MineCustomTabText" />
 
 </RelativeLayout>
