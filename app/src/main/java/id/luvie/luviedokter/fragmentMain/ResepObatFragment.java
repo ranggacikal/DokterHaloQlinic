@@ -74,8 +74,11 @@ public class ResepObatFragment extends Fragment {
                     }
                 });
 
-        textNamaDokter.setText("Dr. "+preferencedConfig.getPreferenceNama());
-
+        if (preferencedConfig.getPreferenceIdKategori().equals("4")){
+            textNamaDokter.setText(preferencedConfig.getPreferenceNama());
+        }else {
+            textNamaDokter.setText("Dr. "+preferencedConfig.getPreferenceNama());
+        }
         bindWidgetsWithAnEvent();
         setupTabLayout();
 

@@ -2,6 +2,7 @@ plugins {
     id 'com.onesignal.androidsdk.onesignal-gradle-plugin'
     id 'com.android.application'
     id 'com.google.gms.google-services'
+    id 'kotlin-android'
 }
 
 android {
@@ -13,7 +14,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.haloqlinic.dokter"
+        applicationId "id.luvie.luviedokter"
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
@@ -86,5 +87,7 @@ dependencies {
 
     //image picker
     implementation 'com.github.dhaval2404:imagepicker:2.1'
+    //fast android networking
+    implementation 'com.amitshekhar.android:android-networking:1.0.2'
 
 }

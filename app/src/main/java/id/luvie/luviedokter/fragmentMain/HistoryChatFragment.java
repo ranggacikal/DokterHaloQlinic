@@ -11,10 +11,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.ParsedRequestListener;
+
 import id.luvie.luviedokter.R;
 import id.luvie.luviedokter.SharedPreference.SharedPreferencedConfig;
 import id.luvie.luviedokter.adapter.HistoryChatAdapter;
+import id.luvie.luviedokter.adapter.HistoryKonsultasiAdapter;
 import id.luvie.luviedokter.api.ConfigRetrofit;
+import id.luvie.luviedokter.model.HistoryKonsultasi;
 import id.luvie.luviedokter.model.listKonsultasi.DataItem;
 import id.luvie.luviedokter.model.listKonsultasi.ResponseDataKonsultasi;
 
@@ -51,7 +58,7 @@ public class HistoryChatFragment extends Fragment {
         recyclerHistoryChat.setHasFixedSize(true);
         recyclerHistoryChat.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        loadKonsultasiSelesai();
+       // loadKonsultasiSelesai();
 
         return rootView;
     }
@@ -78,6 +85,30 @@ public class HistoryChatFragment extends Fragment {
             }
         });
 
+    }
+
+    private void historyKonsultasi(){
+        String host = "https://luvie.co.id/android/dokter/history_konsultasi.php";
+        AndroidNetworking.post(host).addBodyParameter("id_dokter",preferencedConfig.getPreferenceIdDokter())
+                .setPriority(Priority.HIGH).build()
+                .getAsObject(HistoryKonsultasi.class, new ParsedRequestListener<HistoryKonsultasi>() {
+                    @Override
+                    public void onResponse(HistoryKonsultasi response) {
+                        HistoryKonsultasiAdapter adapter  = new HistoryKonsultasiAdapter(getActivity(),response.getItems());
+                        recyclerHistoryChat.setAdapter(adapter);
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        Toast.makeText(getActivity(), "Error: "+anError.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        historyKonsultasi();
     }
 
 }

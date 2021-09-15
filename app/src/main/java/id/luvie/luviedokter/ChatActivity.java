@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -19,6 +20,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.bumptech.glide.Glide;
 
 import id.luvie.luviedokter.R;
@@ -31,6 +36,7 @@ import id.luvie.luviedokter.model.listKonsultasi.ResponseDataKonsultasi;
 import id.luvie.luviedokter.model.listKonsultasiOnline.ResponseDataKonsultasiOnline;
 import id.luvie.luviedokter.model.notifChat.ResponseNotif;
 import id.luvie.luviedokter.model.pushNotifResep.ResponsePushNotifResep;
+import id.luvie.luviedokter.model.status.ResponseItem;
 import id.luvie.luviedokter.model.updateStatus.ResponseUpdateStatus;
 import id.luvie.luviedokter.model.updateWaktuKonsul.ResponseUpdateWaktuKonsul;
 
@@ -43,8 +49,10 @@ import com.mesibo.calls.api.MesiboVideoView;
 import com.mesibo.messaging.MesiboUI;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
@@ -57,6 +65,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.thekhaeng.pushdownanim.PushDownAnim.MODE_SCALE;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class ChatActivity extends AppCompatActivity implements Mesibo.ConnectionListener,
         Mesibo.MessageListener, Mesibo.CallListener {
@@ -347,6 +359,8 @@ public class ChatActivity extends AppCompatActivity implements Mesibo.Connection
 
     boolean buttonChat;
     CountDownTimer cdTimer;
+    Runnable runnableKonsultasi;
+    String durationLimit = "";
 
 
 //    boolean isLooping = true;
@@ -539,10 +553,11 @@ public class ChatActivity extends AppCompatActivity implements Mesibo.Connection
                 if (response.isSuccessful()) {
 
 
-                    Intent intent = new Intent(ChatActivity.this, TambahResepObatActivity.class);
+                    cekStatus();
+                   /* Intent intent = new Intent(ChatActivity.this, TambahResepObatActivity.class);
                     intent.putExtra("id_transaksi", id_transaksi);
                     intent.putExtra("id_customer", id_customer);
-                    startActivity(intent);
+                    startActivity(intent);*/
 
                 } else {
                     Toast.makeText(ChatActivity.this, "Gagal Push Notif", Toast.LENGTH_SHORT).show();
@@ -713,8 +728,12 @@ public class ChatActivity extends AppCompatActivity implements Mesibo.Connection
                     progressDialog.dismiss();
                     Toast.makeText(ChatActivity.this, "Berhasil membuka waktu konsultasi", Toast.LENGTH_SHORT).show();
 //                    loadDataKonsultasi(id_transaksi_online);
-                    long duration = TimeUnit.MINUTES.toMillis(1);
 
+                    countDown(response.body().getBatasKonsultasi());
+
+                    /*int waktu = Integer.parseInt(response.body().getWaktu_konsultasi());
+                    long detik = TimeUnit.MINUTES.toSeconds(waktu);
+                    long duration = TimeUnit.SECONDS.toMillis(detik);
                     cdTimer = new CountDownTimer(duration, 1000) {
                         @Override
                         public void onTick(long millisUntilFinished) {
@@ -725,7 +744,7 @@ public class ChatActivity extends AppCompatActivity implements Mesibo.Connection
                             Log.d("cekSduration", "onTick: " + TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished));
 
 
-                            detik = (int) TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished);
+                          //  detik = (int) TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished);
 
                             LayoutInflater inflater = getLayoutInflater();
                             toast1 = new Toast(getApplicationContext());
@@ -791,7 +810,7 @@ public class ChatActivity extends AppCompatActivity implements Mesibo.Connection
 
                             }
                         }
-                    }.start();
+                    }.start();*/
 
 
                     if (buttonChat == true) {
@@ -866,9 +885,10 @@ public class ChatActivity extends AppCompatActivity implements Mesibo.Connection
                     if (toast1!=null) {
                         toast1.cancel();
                     }
+                    toast1.cancel();
 //                    cdTimer.cancel();
-                    startActivity(new Intent(ChatActivity.this, MainActivity.class));
-                    finish();
+                   /* startActivity(new Intent(ChatActivity.this, MainActivity.class));
+                    finish();*/
                 } else {
                     progressDialog.dismiss();
                     Toast.makeText(ChatActivity.this, "Gagal Menyelesaikan konsultasi", Toast.LENGTH_SHORT).show();
@@ -961,6 +981,39 @@ public class ChatActivity extends AppCompatActivity implements Mesibo.Connection
 
     }
 
+    private void cekStatus(){
+        String host = "https://luvie.co.id/android/dokter/status.php";
+        AndroidNetworking.post(host).addBodyParameter("id_dokter",preferencedConfig.getPreferenceIdDokter())
+                .setPriority(Priority.HIGH).build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONArray jsonArray = response.getJSONArray("response");
+                            JSONObject jsonObject = jsonArray.getJSONObject(0);
+
+                            String id_kategori = jsonObject.getString("id_kategori");
+
+
+                            Intent intent = new Intent(ChatActivity.this, TambahResepObatActivity.class);
+                            intent.putExtra("id_transaksi", id_transaksi);
+                            intent.putExtra("id_customer", id_customer);
+                            intent.putExtra("id_kategori",id_kategori);
+                            startActivity(intent);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        cekStatus();
+                    }
+                });
+    }
+
 //    @Override
 //    public void Mesibo_onMessageStatus(Mesibo.MessageParams messageParams) {
 //
@@ -995,6 +1048,84 @@ public class ChatActivity extends AppCompatActivity implements Mesibo.Connection
 //    public void Mesibo_onFile(Mesibo.MessageParams messageParams, Mesibo.FileInfo fileInfo) {
 //
 //    }
+
+
+    void countDown(String tanggal_selesai){
+        Handler handler = new Handler();
+        runnableKonsultasi = new Runnable() {
+            @Override
+            public void run() {
+                handler.postDelayed(this,200);
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                try {
+                    Date selesai = simpleDateFormat.parse(tanggal_selesai);
+                    // Date mulai = simpleDateFormat.parse(tanggal_mulai);
+                    Date current_date = new Date();
+                    if (!current_date.after(selesai)){
+                        long diff = selesai.getTime() - current_date.getTime();
+                        long Days = diff / (24 * 60 * 60 * 1000);
+                        long Hours = diff / (60 * 60 * 1000) % 24;
+                        long Minutes = diff / (60 * 1000) % 60;
+                        long Seconds = diff / 1000 % 60;
+
+                        String sDuration =  String.format("%02d", Minutes)+" : "+String.format("%02d", Seconds);
+                        // durationLimit = String.format("%02d", Minutes)+String.format("%02d", Seconds);
+
+                        LayoutInflater inflater = getLayoutInflater();
+                        toast1 = new Toast(getApplicationContext());
+                        layout1 = inflater.inflate(R.layout.custom_toast, findViewById(R.id.linear_custom_toast));
+                        TextView txtToast = layout1.findViewById(R.id.text_toast_waktu);
+                        txtToast.setText(sDuration);
+                        durationLimit = txtToast.getText().toString();
+                        toast1.setGravity(Gravity.TOP | Gravity.RIGHT, 10, 0);
+                        toast1.setDuration(Toast.LENGTH_SHORT);
+                        toast1.setView(layout1);
+                        toast1.show();
+                    }else {
+                        if (durationLimit.equals("00 : 00")){
+                            handler.removeCallbacks(runnableKonsultasi);
+                            toast1.cancel();
+
+                            if (buttonChat == false) {
+
+                                MesiboCall.Call mCall2 = MesiboCall.getInstance().getActiveCall();
+                                if (mCall2 == null) {
+                                    //There is no active call
+                                    //We can make an outgoing call
+
+                                    //Create a CallProperties object
+                                    MesiboCall.CallProperties cp = MesiboCall.getInstance().createCallProperties(true);
+
+                                    // Call Factory method to create a call object
+                                    mCall2 = MesiboCall.getInstance().call(cp);
+                                    if (mCall2 == null) {
+                                        //Error
+                                    }
+                                }
+                                mCall2.hangup();
+                                updateStatus();
+                                Toast.makeText(ChatActivity.this, "Silahkan Akhiri Konsultasi", Toast.LENGTH_LONG).show();
+
+                            } else {
+//                            int tutup = MesiboCall.MESIBOCALL_HANGUP_REASON_USER;
+//                            mCall2.hangup();
+                                updateStatus();
+
+                            }
+                            startActivity(new Intent(ChatActivity.this, MainActivity.class));
+                            finish();
+                        }
+
+                    }
+
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        };
+        handler.postDelayed(runnableKonsultasi,0);
+    }
 
 
     @Override

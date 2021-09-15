@@ -78,6 +78,11 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 id_kategori = dataKategori.get(position).getIdKategori();
+                if (!id_kategori.equals("4")){
+                    binding.llDokter.setVisibility(View.VISIBLE);
+                }else {
+                    binding.llDokter.setVisibility(View.GONE);
+                }
             }
 
             @Override
@@ -224,33 +229,58 @@ public class SignupActivity extends AppCompatActivity {
         }
 
         if (no_sip.isEmpty()){
-            binding.edtSignupNoSip.setError("No SIP tidak boleh kosong");
-            binding.edtSignupNoSip.requestFocus();
-            return;
+            if (!id_kategori.equals("4")){
+                binding.edtSignupNoSip.setError("No SIP tidak boleh kosong");
+                binding.edtSignupNoSip.requestFocus();
+                return;
+            }else {
+                no_sip = "-";
+            }
+
         }
 
         if (spesialis.isEmpty()){
-            binding.edtSignupSpesialis.setError("Spesialis tidak boleh kosng");
-            binding.edtSignupSpesialis.requestFocus();
-            return;
+            if (!id_kategori.equals("4")){
+                binding.edtSignupSpesialis.setError("Spesialis tidak boleh kosng");
+                binding.edtSignupSpesialis.requestFocus();
+                return;
+            }else {
+                spesialis = "-";
+            }
+
         }
 
         if (tentang.isEmpty()){
-            binding.edtSignupTentang.setError("Tentang tidak boleh kosng");
-            binding.edtSignupTentang.requestFocus();
-            return;
+            if (!id_kategori.equals("4")){
+                binding.edtSignupTentang.setError("Tentang tidak boleh kosng");
+                binding.edtSignupTentang.requestFocus();
+                return;
+            }else {
+                tentang = "-";
+            }
+
         }
 
         if (str.isEmpty()){
-            binding.edtSignupNoStr.setError("No. STR tidak boleh kosong");
-            binding.edtSignupNoStr.requestFocus();
-            return;
+            if (!id_kategori.equals("4")){
+                binding.edtSignupNoStr.setError("No. STR tidak boleh kosong");
+                binding.edtSignupNoStr.requestFocus();
+                return;
+            }else {
+                str = "-";
+            }
+
         }
 
         if (alumni.isEmpty()){
-            binding.edtSignupAlumni.setError("Alumni tidak boleh kosong");
-            binding.edtSignupAlumni.requestFocus();
-            return;
+            if (!id_kategori.equals("4")){
+                binding.edtSignupAlumni.setError("Alumni tidak boleh kosong");
+                binding.edtSignupAlumni.requestFocus();
+                return;
+            }else {
+                alumni = "-";
+            }
+
         }
 
         if (tempat_praktik.isEmpty()){

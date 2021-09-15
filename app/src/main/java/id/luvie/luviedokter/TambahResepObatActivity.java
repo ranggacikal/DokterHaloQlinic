@@ -16,6 +16,7 @@ import id.luvie.luviedokter.api.ConfigRetrofit;
 
 
 import id.luvie.luviedokter.databinding.ActivityTambahResepObatBinding;
+import id.luvie.luviedokter.model.HistoryKonsultasi;
 import id.luvie.luviedokter.model.listRecipe.DataItem;
 import id.luvie.luviedokter.model.listRecipe.ResponseDataRecipe;
 import id.luvie.luviedokter.model.updateRecipe.ResponseUpdateResep;
@@ -37,6 +38,7 @@ public class TambahResepObatActivity extends AppCompatActivity {
     public String id_transaksi, id_customer;
 
     String id_member = "";
+    String id_kategori = "";
 
     private SharedPreferencedConfig preferencedConfig;
 
@@ -51,22 +53,35 @@ public class TambahResepObatActivity extends AppCompatActivity {
         preferencedConfig = new SharedPreferencedConfig(this);
 
         if (dataResep!=null) {
-
             dataResep.clear();
-
         }
+
 
         id_transaksi = getIntent().getStringExtra("id_transaksi");
         id_customer = getIntent().getStringExtra("id_customer");
-        String id_kategori_dokter = preferencedConfig.getPreferenceIdKategori();
+        id_kategori = getIntent().getStringExtra("id_kategori");
+
+        if (id_kategori.equals("3")||id_kategori.equals("4")){
+            binding.relativeKlinik.setVisibility(View.GONE);
+        }else {
+            binding.relativeKlinik.setVisibility(View.VISIBLE);
+        }
+
+       /* String id_kategori_dokter = preferencedConfig.getPreferenceIdKategori();
 
         if (id_kategori_dokter.equals("2")){
             binding.relativeKlinik.setVisibility(View.VISIBLE);
         }else if (id_kategori_dokter.equals("3")){
             binding.relativeKlinik.setVisibility(View.GONE);
-        }
+        }*/
 
         Log.d("cekIdTransaksi", "onCreate: "+ id_transaksi);
+
+        if (getIntent().getStringExtra("status")!=null){
+            HistoryKonsultasi item = (HistoryKonsultasi) getIntent().getSerializableExtra("item");
+            binding.edtCatatanResepObat.setText(item.getCatatan());
+            binding.edtDiagnosaResep.setText(item.getDiagnosis());
+        }
 
         binding.recyclerListResep.setHasFixedSize(true);
         binding.recyclerListResep.setLayoutManager(new LinearLayoutManager(TambahResepObatActivity.this));
@@ -162,31 +177,31 @@ public class TambahResepObatActivity extends AppCompatActivity {
         ConfigRetrofit.service.updateResep(id_transaksi, id_pesan, jumlah, harga, berat_item, catatan,
                 diagnosis, id_member)
                 .enqueue(new Callback<ResponseUpdateResep>() {
-            @Override
-            public void onResponse(Call<ResponseUpdateResep> call, Response<ResponseUpdateResep> response) {
-                if (response.isSuccessful()){
+                    @Override
+                    public void onResponse(Call<ResponseUpdateResep> call, Response<ResponseUpdateResep> response) {
+                        if (response.isSuccessful()){
 
-                    progressDialogUpdate.dismiss();
-                    Log.d("cekLisParam", "idPesan: "+id_pesan);
-                    Log.d("cekLisParam", "jumlah: "+jumlah);
-                    Log.d("cekLisParam", "harga: "+harga);
-                    Log.d("cekLisParam", "beratiItem: "+berat_item);
-                    Log.d("cekLisParam", "id_member: "+id_member);
-                    Toast.makeText(TambahResepObatActivity.this, "Berhasil kirim list obat", Toast.LENGTH_SHORT).show();
-                    finish();
+                            progressDialogUpdate.dismiss();
+                            Log.d("cekLisParam", "idPesan: "+id_pesan);
+                            Log.d("cekLisParam", "jumlah: "+jumlah);
+                            Log.d("cekLisParam", "harga: "+harga);
+                            Log.d("cekLisParam", "beratiItem: "+berat_item);
+                            Log.d("cekLisParam", "id_member: "+id_member);
+                            Toast.makeText(TambahResepObatActivity.this, "Berhasil kirim list obat", Toast.LENGTH_SHORT).show();
+                            finish();
 
-                }else{
-                    progressDialogUpdate.dismiss();
-                    Toast.makeText(TambahResepObatActivity.this, "Gagal kirim list obat", Toast.LENGTH_SHORT).show();
-                }
-            }
+                        }else{
+                            progressDialogUpdate.dismiss();
+                            Toast.makeText(TambahResepObatActivity.this, "Gagal kirim list obat", Toast.LENGTH_SHORT).show();
+                        }
+                    }
 
-            @Override
-            public void onFailure(Call<ResponseUpdateResep> call, Throwable t) {
-                progressDialogUpdate.dismiss();
-                Toast.makeText(TambahResepObatActivity.this, "Error: "+t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+                    @Override
+                    public void onFailure(Call<ResponseUpdateResep> call, Throwable t) {
+                        progressDialogUpdate.dismiss();
+                        Toast.makeText(TambahResepObatActivity.this, "Error: "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
 
     }
 

@@ -62,8 +62,13 @@ public class ProfileFragment extends Fragment {
 
         initGambar();
 
-        txtNamaDokter.setText("Dr. "+preferencedConfig.getPreferenceNama());
-        txtSpesialis.setText("Spesialis "+preferencedConfig.getPreferenceSpesialis());
+        if (preferencedConfig.getPreferenceIdKategori().equals("4")){
+            txtNamaDokter.setText(preferencedConfig.getPreferenceNama());
+            txtSpesialis.setText("");
+        }else {
+            txtNamaDokter.setText("Dr. "+preferencedConfig.getPreferenceNama());
+            txtSpesialis.setText("Spesialis "+preferencedConfig.getPreferenceSpesialis());
+        }
 
         PushDownAnim.setPushDownAnimTo(cardEditAKun)
                 .setScale( MODE_SCALE, 0.89f  )

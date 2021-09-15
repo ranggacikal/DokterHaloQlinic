@@ -132,6 +132,12 @@ public class HomeFragment extends Fragment {
             handler.removeCallbacks(runnable);
         }
 
+        if (preferencedConfig.getPreferenceIdKategori().equals("4")){
+            txtNamaDokter.setText(preferencedConfig.getPreferenceNama());
+        }else {
+            txtNamaDokter.setText("Dr. "+preferencedConfig.getPreferenceNama());
+        }
+
         switchButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -286,12 +292,13 @@ public class HomeFragment extends Fragment {
     }
 
     private void loadStatus() {
+        String id = preferencedConfig.getPreferenceIdDokter();
 
         ProgressDialog progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Memuat Status Dokter");
         progressDialog.show();
 
-        ConfigRetrofit.service.status(preferencedConfig.getPreferenceIdDokter(), user_id).enqueue(new Callback<ResponseStatus>() {
+        ConfigRetrofit.service.status(id, user_id).enqueue(new Callback<ResponseStatus>() {
             @Override
             public void onResponse(Call<ResponseStatus> call, Response<ResponseStatus> response) {
                 if (response.isSuccessful()){
