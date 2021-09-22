@@ -7,7 +7,6 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="com.google.android.c2dm.permission.SEND" />
-<!--    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY"/>-->
 
     <application
         android:allowBackup="true"
@@ -17,6 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DokterHaloQlinic"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".UlasanActivity"
+            android:exported="true" />
         <activity
             android:name=".callCustom.ExampleActivity"
             android:exported="true" />

@@ -1055,7 +1055,7 @@ public class ChatActivity extends AppCompatActivity implements Mesibo.Connection
         runnableKonsultasi = new Runnable() {
             @Override
             public void run() {
-                handler.postDelayed(this,200);
+                handler.postDelayed(this,1000);
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 try {
                     Date selesai = simpleDateFormat.parse(tanggal_selesai);
@@ -1081,6 +1081,15 @@ public class ChatActivity extends AppCompatActivity implements Mesibo.Connection
                         toast1.setDuration(Toast.LENGTH_SHORT);
                         toast1.setView(layout1);
                         toast1.show();
+
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                toast1.cancel();
+                            }
+                        }, 1000);
+
                     }else {
                         if (durationLimit.equals("00 : 00")){
                             handler.removeCallbacks(runnableKonsultasi);

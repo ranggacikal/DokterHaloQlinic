@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
 import id.luvie.luviedokter.R;
@@ -41,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
 
         bindWidgetsWithAnEvent();
         setupTabLayout();
+
+        Toast.makeText(getApplicationContext(),preferencedConfig.getPreferenceIdDokter(),Toast.LENGTH_LONG).show();
 
     }
 

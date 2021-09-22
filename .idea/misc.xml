@@ -5,8 +5,12 @@
       <map>
         <entry key="..\:/Project/Starcom/luvie-dokter/app/src/main/res/layout/activity_signup.xml" value="0.2546875" />
         <entry key="..\:/Project/Starcom/luvie-dokter/app/src/main/res/layout/activity_tambah_resep_obat.xml" value="0.2546875" />
+        <entry key="..\:/Project/Starcom/luvie-dokter/app/src/main/res/layout/activity_tarik_dana.xml" value="0.13072916666666667" />
+        <entry key="..\:/Project/Starcom/luvie-dokter/app/src/main/res/layout/activity_ulasan.xml" value="0.13072916666666667" />
         <entry key="..\:/Project/Starcom/luvie-dokter/app/src/main/res/layout/fragment_home.xml" value="0.2546875" />
+        <entry key="..\:/Project/Starcom/luvie-dokter/app/src/main/res/layout/fragment_profile.xml" value="0.13072916666666667" />
         <entry key="..\:/Project/Starcom/luvie-dokter/app/src/main/res/layout/item_history_konsultasi.xml" value="0.2546875" />
+        <entry key="..\:/Project/Starcom/luvie-dokter/app/src/main/res/layout/item_ulasan.xml" value="0.13072916666666667" />
         <entry key="app/src/main/res/drawable/bg_border_green.xml" value="0.13333333333333333" />
         <entry key="app/src/main/res/layout/activity_call.xml" value="0.1644021739130435" />
         <entry key="app/src/main/res/layout/activity_chat.xml" value="0.1" />

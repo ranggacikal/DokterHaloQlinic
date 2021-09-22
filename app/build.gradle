@@ -89,5 +89,13 @@ dependencies {
     implementation 'com.github.dhaval2404:imagepicker:2.1'
     //fast android networking
     implementation 'com.amitshekhar.android:android-networking:1.0.2'
+    //kotlin splitties
+    ext. splitties_version = "3.0.0-beta01"
+    implementation("com.louiscad.splitties:splitties-activities:$splitties_version")
+    implementation("com.louiscad.splitties:splitties-alertdialog:$splitties_version")
+    implementation("com.louiscad.splitties:splitties-alertdialog-appcompat:$splitties_version")
+    implementation("com.louiscad.splitties:splitties-alertdialog-appcompat-coroutines:$splitties_version")
+    implementation("com.louiscad.splitties:splitties-toast:$splitties_version")
+    implementation("com.louiscad.splitties:splitties-snackbar:$splitties_version")
 
 }

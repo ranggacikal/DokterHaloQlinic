@@ -17,6 +17,7 @@ import id.luvie.luviedokter.EditAkunActivity;
 import id.luvie.luviedokter.LoginActivity;
 import id.luvie.luviedokter.R;
 import id.luvie.luviedokter.SharedPreference.SharedPreferencedConfig;
+import id.luvie.luviedokter.UlasanActivity;
 import id.luvie.luviedokter.UpdatePasswordActivity;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
@@ -102,7 +103,7 @@ public class ProfileFragment extends Fragment {
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        startActivity(new Intent(getContext(), UlasanActivity.class));
                     }
                 });
 
@@ -114,6 +115,8 @@ public class ProfileFragment extends Fragment {
                         tampilDialog();
                     }
                 });
+
+
 
         return rootView;
     }
